@@ -1,0 +1,12 @@
+New Company
+
+<form action='/companies' method='POST'>
+  Name: <input type='text' name='companies[name]'/> <br/>
+  <select name="companies[drink_id]">
+    <% @drinks.each do |drink| %>
+      <option value="<%= drink.id %>"><%= drink.name %></option>
+    <% end %>
+  </select>
+  <br/>
+  <input type='submit' value='Create a Company'/>
+</form>x

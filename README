@@ -1,0 +1,12 @@
+# Readme
+
+## Installation
+1) Install Ruby via HomeBrew (http://brew.sh/)
+2) Install bundler (gem install bundler)
+3) Clone app,
+4) Cd into the app
+5) bundle install
+6) gem install foreman
+7) foreman start
+8) Go to http://localhost:5000 to run the app
+9) After each change you will have to break the app and reboot it (CTRL+C)

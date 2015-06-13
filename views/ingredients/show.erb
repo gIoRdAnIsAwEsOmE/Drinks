@@ -1,0 +1,11 @@
+<h1> Ingredients </h1>
+Name: <%= ingredients.name %> </br>
+
+<h2> Used in these drinks </h2>
+
+Drinks: 
+<ul>
+  <% drinks.ingredients.each do |ingredient| %>
+    <li><%= ingredient.name %></li>
+  <% end %>
+</ul>

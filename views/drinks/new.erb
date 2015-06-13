@@ -1,0 +1,16 @@
+New Drink (*Gulp *Gulp *Gulp)
+
+<form action='/drinks' method='POST'>
+  Name: <input type='text' name='drink[name]'/> <br/>
+  <select name="drink[company_id]">
+    <% @companies.each do |company| %>
+      <option value="<%= company.id %>"><%= company.name %></option>
+    <% end %>
+  </select>
+  <select name="drink[ingredient_id]">
+    <% @ingredient.each do |ingredient| %>
+      <option value="<%= artist.id %>"><%= ingredient.name %></option>
+    <% end %>
+  </select>
+  <input type='submit' value='Create Artist'/>
+</form>
