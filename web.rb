@@ -61,31 +61,29 @@ class Drink
   include DataMapper::Resource
   property :id, Serial
   property :name, String
-  belongs_to :company #Ability to reference to company.drink
-  has n, :ingredients # Ability to reference as @drink.ingreidents
+  belongs_to :Company #Ability to reference to company.drink
+  has n, :Ingredient # Ability to reference as @drink.ingreidents
 end
-
 class Company
   include DataMapper::Resource
   property :id, Serial
   property :name, String
   property :popularity, Integer
-  has n, :drinks
+  has n, :Drink
   # property :Bankrupted, Boolean
 end
-
 class Ingredient
   include DataMapper::Resource
   property :id, Serial
   property :name, String
   property :color, String
   property :Grams_Of_Sugar, Integer
-  belongs_to, :drinks
+  belongs_to :Drink
 end
 
 
 #Finalization and AutoUpgrading
-DataMapper.finalize!
+DataMapper.finalize
 
 Drink.auto_upgrade!
 Company.auto_upgrade!
@@ -129,8 +127,8 @@ get '/' do
 end
 
 get '/new' do
-  @ingredient: Ingredient.all
-  @drink: Drink.all
+  @ingredient = Ingredient.all
+  @drink = Drink.all
   erb :new
 end
 
@@ -140,8 +138,9 @@ post '/create' do
 end
 
 get 'drinks/:id' do                                           #  /==/   /==\  \    /\    /  /==/
-  if @drink = Drink.first(id: params[:id])                    # /--/   /----\  \  /  \  /  /--/
-    erb :'drinks/show',locals { drinks: @drink }              #/   \  /      \  \/    \/  /   \
+  if @drink = Drink.first(id: params[:id])
+      if @company = Company.first(id: params[:id])                  # /--/   /----\  \  /  \  /  /--/
+        erb :'drinks/show', locals: { drink: @drink, company: @company }              #/   \  /      \  \/    \/  /   \
   end
 end
 
@@ -173,16 +172,17 @@ end
 # ---------------------------------------------------------
 get '/ingredients/new' do
   @ingredients = Ingredient.all
-  erb : '/ingredients/new', locals: { ingredients: @ingredients }
+  erb :'/ingredients/new', locals: { ingredients: @ingredients }
 end
 
 post '/ingredients' do
   @ingredients = Ingredient.create(params[:ingredient])
   redirect to("/ingredients/#{@ingredients.id}")
 end
-
+  
 get '/ingredients/:id' do
   if @ingredients = Ingredient.first(id: params[:id])
     erb :'ingredients/show', locals: { ingredients: @ingredients }
+    end
   end
 end
